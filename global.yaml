@@ -19,7 +19,7 @@ spec:
         # Aquí va tu chart de DockerHub
         chart: mi-chart
         repoURL: oci://registry-1.docker.io/adonispaz9506
-        targetRevision: 7  # versión del chart
+        targetRevision: "7"  # versión del chart
         helm:
           # Aquí usas los values.yaml de cada carpeta
           valueFiles:
