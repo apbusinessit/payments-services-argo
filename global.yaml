@@ -33,8 +33,3 @@ spec:
           selfHeal: true
         syncOptions:
         - CreateNamespace=true
-      # Referencia al repo de Git para los values
-      sources:
-      - repoURL: https://github.com/apbusinessit/payments-services-argo.git
-        targetRevision: main
-        ref: values
