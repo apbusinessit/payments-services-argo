@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservicios
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/apbusinessit/payments-services-argo.git
+      revision: main
+      directories:
+      - path: apps/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        # Aquí va tu chart de DockerHub
+        chart: mi-chart
+        repoURL: oci://registry-1.docker.io/adonispaz9506
+        targetRevision: 7  # versión del chart
+        helm:
+          # Aquí usas los values.yaml de cada carpeta
+          valueFiles:
+          - $values/{{path}}/values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      # Referencia al repo de Git para los values
+      sources:
+      - repoURL: https://github.com/apbusinessit/payments-services-argo.git
+        targetRevision: main
+        ref: values
