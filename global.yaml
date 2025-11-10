@@ -15,15 +15,16 @@ spec:
       name: '{{path.basename}}'
     spec:
       project: default
-      source:
-        # Aquí va tu chart de DockerHub
-        chart: mi-chart
-        repoURL: oci://registry-1.docker.io/adonispaz9506
-        targetRevision: "7"  # versión del chart
-        helm:
-          # Aquí usas los values.yaml de cada carpeta
-          valueFiles:
-          - $values/{{path}}/values.yaml
+      sources:  # ← CAMBIO: sources en plural
+        - repoURL: oci://registry-1.docker.io/adonispaz9506
+          chart: mi-chart
+          targetRevision: "7"
+          helm:
+            valueFiles:
+              - $values/{{path}}/values.yaml
+        - repoURL: https://github.com/apbusinessit/payments-services-argo.git
+          targetRevision: main
+          ref: values  # ← IMPORTANTE: este ref es necesario
       destination:
         server: https://kubernetes.default.svc
         namespace: default
@@ -32,4 +33,4 @@ spec:
           prune: true
           selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
