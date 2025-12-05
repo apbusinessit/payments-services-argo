@@ -3,7 +3,7 @@ name: microservice-1
 # Kubernetes namespace to install into (can be overridden)
 namespace: default
 
-replicaCount: 1
+replicaCount: 2
 
 container:
   # Full image name without tag (e.g. 'adonispaz9506/hola-mundo-clase567')
@@ -24,7 +24,7 @@ resources:
     memory: "1500Mi"
 
 hpa:
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 5
   targetCPUUtilizationPercentage: 75
 
